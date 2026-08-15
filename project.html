@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Details | neunrg</title>
+<meta name="description" content="Explore outcome-focused project case studies by neunrg.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Exo+2:wght@300;400;600;700;900&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050A12;
+    --bg2: #070D17;
+    --card: rgba(0,240,255,0.04);
+    --border: rgba(0,240,255,0.12);
+    --border-bright: rgba(0,240,255,0.34);
+    --cyan: #00F0FF;
+    --text: #D8E8F0;
+    --text-muted: #6B8796;
+    --text-bright: #F0F8FF;
+    --display: 'Bebas Neue', cursive;
+    --head: 'Exo 2', sans-serif;
+    --body: 'Sora', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at top left, rgba(0,240,255,0.1), transparent 22%),
+      radial-gradient(circle at top right, rgba(57,255,136,0.08), transparent 18%),
+      linear-gradient(180deg, #050A12 0%, #070D17 100%);
+    color: var(--text);
+    font-family: var(--body);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+  body::before,
+  body::after {
+    content: '';
+    position: fixed;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+  body::before {
+    top: -120px;
+    right: -120px;
+    background: rgba(0,240,255,0.08);
+  }
+  body::after {
+    bottom: -140px;
+    left: -100px;
+    background: rgba(57,255,136,0.06);
+  }
+  a { color: inherit; }
+  .page-shell {
+    position: relative;
+    z-index: 1;
+  }
+  .container {
+    width: min(1180px, 90vw);
+    margin: 0 auto;
+  }
+  .project-nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(5,10,18,0.7);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border);
+  }
+  .project-nav-inner {
+    min-height: 78px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .logo {
+    font-family: var(--display);
+    font-size: 2rem;
+    letter-spacing: 0.05em;
+    color: var(--text-bright);
+    text-decoration: none;
+  }
+  .logo span { color: var(--cyan); }
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .nav-link,
+  .nav-button,
+  .back-button,
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-decoration: none;
+    font-family: var(--head);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    transition: all 0.24s;
+  }
+  .nav-link,
+  .back-button {
+    color: var(--text-muted);
+  }
+  .nav-link:hover,
+  .back-button:hover {
+    color: var(--cyan);
+  }
+  .nav-button,
+  .cta-button {
+    padding: 14px 26px;
+    border: 1px solid rgba(57,255,136,0.16);
+    color: var(--bg);
+    background: linear-gradient(135deg, #39FF88, var(--cyan));
+    border-radius: 999px;
+    box-shadow: 0 14px 38px rgba(0,240,255,0.2);
+  }
+  .nav-button:hover,
+  .cta-button:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 18px 42px rgba(0,240,255,0.28);
+  }
+  .project-hero {
+    padding: 88px 0 46px;
+  }
+  .project-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+    gap: 32px;
+    align-items: stretch;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--head);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 22px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 30px;
+    height: 1px;
+    background: var(--cyan);
+  }
+  .project-title {
+    font-family: var(--display);
+    font-size: clamp(3.2rem, 7vw, 6.2rem);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    color: var(--text-bright);
+    margin-bottom: 18px;
+  }
+  .project-tagline {
+    max-width: 720px;
+    font-size: 1.06rem;
+    color: var(--text);
+    margin-bottom: 26px;
+  }
+  .project-summary {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    max-width: 760px;
+  }
+  .summary-tile,
+  .detail-card,
+  .result-card,
+  .related-card {
+    border: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(0,240,255,0.06), rgba(0,240,255,0.02));
+    backdrop-filter: blur(10px);
+  }
+  .summary-tile {
+    padding: 18px 20px;
+  }
+  .summary-label,
+  .detail-label,
+  .result-label {
+    font-family: var(--head);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+  .summary-value {
+    font-size: 1rem;
+    color: var(--text-bright);
+  }
+  .result-card {
+    padding: 34px 30px;
+    position: sticky;
+    top: 104px;
+    align-self: start;
+    overflow: hidden;
+  }
+  .result-card::before {
+    content: '';
+    position: absolute;
+    inset: auto -40px -40px auto;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: rgba(0,240,255,0.08);
+    filter: blur(10px);
+  }
+  .result-highlight {
+    position: relative;
+    font-family: var(--display);
+    font-size: clamp(1.9rem, 3.8vw, 3.2rem);
+    line-height: 1.02;
+    color: var(--cyan);
+    margin: 8px 0 16px;
+  }
+  .result-copy {
+    position: relative;
+    color: var(--text);
+  }
+  .result-note {
+    position: relative;
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(0,240,255,0.14);
+    color: var(--text-muted);
+    font-size: 0.94rem;
+  }
+  .result-card-actions {
+    position: relative;
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .details-section,
+  .related-section,
+  .project-cta {
+    padding: 18px 0 54px;
+  }
+  .details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+  .detail-card {
+    padding: 28px;
+    min-height: 100%;
+    transition: border-color 0.24s, transform 0.24s, background 0.24s;
+  }
+  .detail-card:hover {
+    border-color: var(--border-bright);
+    transform: translateY(-4px);
+    background: linear-gradient(180deg, rgba(0,240,255,0.08), rgba(0,240,255,0.03));
+  }
+  .detail-title {
+    font-family: var(--head);
+    font-size: 1.12rem;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 12px;
+  }
+  .detail-copy {
+    color: var(--text-muted);
+    font-size: 0.96rem;
+  }
+  .tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .tech-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 16px;
+    border: 1px solid rgba(0,240,255,0.14);
+    background: rgba(0,240,255,0.07);
+    font-family: var(--head);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+  .section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 26px;
+    flex-wrap: wrap;
+  }
+  .section-heading h2 {
+    font-family: var(--display);
+    font-size: clamp(2.3rem, 4.6vw, 4rem);
+    line-height: 0.95;
+    color: var(--text-bright);
+  }
+  .section-heading p {
+    max-width: 540px;
+    color: var(--text-muted);
+  }
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .related-card {
+    padding: 24px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.24s, border-color 0.24s, background 0.24s;
+  }
+  .related-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-bright);
+    background: linear-gradient(180deg, rgba(0,240,255,0.08), rgba(0,240,255,0.03));
+  }
+  .related-category {
+    font-family: var(--head);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 12px;
+  }
+  .related-name {
+    font-family: var(--head);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 10px;
+  }
+  .related-tagline {
+    color: var(--text-muted);
+    margin-bottom: 18px;
+    font-size: 0.92rem;
+  }
+  .related-link {
+    font-family: var(--head);
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-bright);
+  }
+  .project-cta-box {
+    padding: 48px;
+    border: 1px solid var(--border-bright);
+    background: linear-gradient(135deg, rgba(0,240,255,0.08), rgba(0,240,255,0.02) 55%, transparent);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .project-cta-copy h2 {
+    font-family: var(--display);
+    font-size: clamp(2.2rem, 5vw, 4.2rem);
+    line-height: 0.95;
+    color: var(--text-bright);
+    margin-bottom: 12px;
+  }
+  .project-cta-copy p {
+    max-width: 620px;
+    color: var(--text-muted);
+  }
+  .project-footer {
+    padding: 30px 0 44px;
+    border-top: 1px solid var(--border);
+  }
+  .project-footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .footer-copy {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+  .footer-links {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+  }
+  .footer-links a:hover { color: var(--cyan); }
+  .footer-contact-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 24px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #39FF88, var(--cyan));
+    color: var(--bg);
+    text-decoration: none;
+    font-family: var(--head);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    box-shadow: 0 14px 38px rgba(0,240,255,0.18);
+    transition: transform 0.24s, box-shadow 0.24s;
+  }
+  .footer-contact-cta:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 18px 42px rgba(0,240,255,0.28);
+  }
+  .floating-whatsapp {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 30;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #29d266, #00f0ff);
+    color: #04111c;
+    box-shadow: 0 18px 44px rgba(0,240,255,0.28);
+    animation: whatsappPulse 2.4s infinite;
+    transition: transform 0.24s, box-shadow 0.24s;
+  }
+  .floating-whatsapp:hover {
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 0 22px 50px rgba(0,240,255,0.36);
+  }
+  .floating-whatsapp svg {
+    width: 28px;
+    height: 28px;
+    fill: currentColor;
+  }
+  @keyframes whatsappPulse {
+    0%, 100% { box-shadow: 0 18px 44px rgba(0,240,255,0.24), 0 0 0 0 rgba(57,255,136,0.22); }
+    50% { box-shadow: 0 18px 44px rgba(0,240,255,0.3), 0 0 0 14px rgba(57,255,136,0); }
+  }
+  .not-found {
+    padding: 120px 0 80px;
+  }
+  .not-found-card {
+    padding: 40px;
+    border: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(0,240,255,0.06), rgba(0,240,255,0.02));
+  }
+  .not-found-card h1 {
+    font-family: var(--display);
+    font-size: clamp(3rem, 6vw, 5rem);
+    color: var(--text-bright);
+    line-height: 0.95;
+    margin-bottom: 16px;
+  }
+  .not-found-card p {
+    color: var(--text-muted);
+    max-width: 620px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 980px) {
+    .project-hero-grid,
+    .details-grid,
+    .related-grid {
+      grid-template-columns: 1fr;
+    }
+    .project-summary {
+      grid-template-columns: 1fr;
+    }
+    .result-card {
+      position: relative;
+      top: auto;
+    }
+  }
+  @media (max-width: 640px) {
+    .project-nav-inner {
+      padding: 16px 0;
+      align-items: flex-start;
+      flex-direction: column;
+    }
+    .nav-actions {
+      width: 100%;
+      justify-content: flex-start;
+    }
+    .project-hero {
+      padding-top: 60px;
+    }
+    .project-cta-box,
+    .detail-card,
+    .result-card,
+    .not-found-card {
+      padding: 26px 22px;
+    }
+    .floating-whatsapp {
+      right: 18px;
+      bottom: 18px;
+      width: 58px;
+      height: 58px;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="page-shell">
+    <nav class="project-nav">
+      <div class="container project-nav-inner">
+        <a class="logo" href="index.html#hero" aria-label="Go to neunrg homepage">neu<span>nrg</span></a>
+        <div class="nav-actions">
+          <a class="nav-link" href="index.html#projects">Projects</a>
+          <a class="nav-link" href="index.html#services">Services</a>
+          <a class="nav-button js-wa-default" href="#" aria-label="Start your project on WhatsApp">Start Project</a>
+        </div>
+      </div>
+    </nav>
+
+    <main id="project-page"></main>
+
+    <footer class="project-footer">
+      <div class="container project-footer-inner">
+        <div class="footer-copy">Copyright <span class="js-current-year">2025</span> neunrg. New Energy. High-Impact Execution.</div>
+        <div class="footer-links">
+          <a href="index.html#projects">Projects</a>
+          <a href="index.html#services">Services</a>
+          <a href="index.html#contact">Contact</a>
+        </div>
+        <a class="footer-contact-cta js-wa-default" href="#" aria-label="Contact neunrg instantly on WhatsApp">Contact Us Instantly</a>
+      </div>
+    </footer>
+  </div>
+
+  <a class="floating-whatsapp js-wa-default" href="#" aria-label="Open WhatsApp chat with neunrg">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.52 3.48A11.8 11.8 0 0012.08 0C5.5 0 .16 5.34.16 11.92c0 2.1.55 4.15 1.6 5.97L0 24l6.29-1.65a11.88 11.88 0 005.79 1.48h.01c6.58 0 11.92-5.35 11.92-11.93 0-3.19-1.24-6.18-3.49-8.42zm-8.44 18.34h-.01a9.9 9.9 0 01-5.04-1.38l-.36-.22-3.73.98 1-3.64-.24-.38a9.9 9.9 0 01-1.52-5.26c0-5.48 4.46-9.93 9.94-9.93 2.65 0 5.14 1.03 7.01 2.91a9.86 9.86 0 012.9 7.02c0 5.48-4.46 9.93-9.95 9.93zm5.45-7.44c-.3-.15-1.78-.88-2.05-.98-.27-.1-.47-.15-.67.15-.2.3-.77.98-.95 1.18-.17.2-.35.22-.65.07-.3-.15-1.28-.47-2.43-1.5-.9-.8-1.5-1.8-1.68-2.1-.18-.3-.02-.47.13-.62.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.5h-.57c-.2 0-.52.07-.8.37-.27.3-1.05 1.03-1.05 2.52s1.08 2.93 1.23 3.13c.15.2 2.12 3.23 5.13 4.53.72.31 1.28.5 1.72.64.72.23 1.37.2 1.89.12.58-.09 1.78-.73 2.03-1.43.25-.7.25-1.3.18-1.42-.08-.12-.27-.2-.57-.35z"/></svg>
+  </a>
+
+  <script src="whatsapp.js"></script>
+  <script src="projects.js"></script>
+  <script>
+    const projectPage = document.getElementById('project-page');
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get('slug');
+    const projects = window.NEUNRG_PROJECTS || [];
+    const project = projects.find(item => item.slug === slug);
+
+    function bindDefaultWhatsAppCtas() {
+      document.querySelectorAll('.js-wa-default').forEach((element) => {
+        applyWhatsAppLink(element, {
+          kind: 'default',
+          ariaLabel: element.getAttribute('aria-label') || 'Chat on WhatsApp'
+        });
+      });
+    }
+
+    function setMeta(currentProject) {
+      if (!currentProject) return;
+      document.title = `${currentProject.name} | neunrg Projects`;
+      const meta = document.querySelector('meta[name="description"]');
+      if (meta) {
+        meta.setAttribute('content', `${currentProject.name} by neunrg. ${currentProject.tagline}. ${currentProject.result}.`);
+      }
+    }
+
+    function renderNotFound() {
+      projectPage.innerHTML = `
+        <section class="not-found">
+          <div class="container">
+            <div class="not-found-card">
+              <a class="back-button" href="index.html#projects"><- Back to Projects</a>
+              <h1>Project Not Found</h1>
+              <p>The project you tried to open is not available. Head back to the portfolio and choose another case study.</p>
+              <a class="cta-button" href="index.html#projects">Browse Projects</a>
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderProject(currentProject) {
+      const projectWhatsAppLink = generateWhatsAppLink({
+        kind: 'project',
+        name: currentProject.name
+      });
+      const relatedProjects = projects
+        .filter(item => item.slug !== currentProject.slug)
+        .sort((a, b) => {
+          const aScore = a.category === currentProject.category ? 0 : 1;
+          const bScore = b.category === currentProject.category ? 0 : 1;
+          return aScore - bScore;
+        })
+        .slice(0, 3)
+        .map(item => `
+          <a class="related-card" href="project.html?slug=${item.slug}">
+            <div class="related-category">${item.category}</div>
+            <div class="related-name">${item.name}</div>
+            <p class="related-tagline">${item.tagline}</p>
+            <div class="related-link">View Details -></div>
+          </a>
+        `)
+        .join('');
+
+      projectPage.innerHTML = `
+        <section class="project-hero">
+          <div class="container">
+            <a class="back-button" href="index.html#projects"><- Back to Projects</a>
+            <div class="project-hero-grid" style="margin-top:24px;">
+              <div>
+                <div class="eyebrow">${currentProject.category}</div>
+                <h1 class="project-title">${currentProject.name}</h1>
+                <p class="project-tagline">${currentProject.tagline}</p>
+                <div class="project-summary">
+                  <div class="summary-tile">
+                    <div class="summary-label">Focus</div>
+                    <div class="summary-value">Outcome-driven execution for a clearer, stronger business result.</div>
+                  </div>
+                  <div class="summary-tile">
+                    <div class="summary-label">Best For</div>
+                    <div class="summary-value">Teams that need modern delivery without technical complexity getting in the way.</div>
+                  </div>
+                </div>
+              </div>
+              <aside class="result-card">
+                <div class="result-label">Result</div>
+                <div class="result-highlight">${currentProject.result}</div>
+                <p class="result-copy">Every project in this portfolio is framed around business outcomes, not just output. The goal is always to build something that performs.</p>
+                <p class="result-note">Tech Used: ${currentProject.techUsed.join(' / ')}</p>
+                <div class="result-card-actions">
+                  <a class="cta-button" href="${projectWhatsAppLink}" target="_blank" rel="noopener noreferrer" aria-label="Start a similar project to ${currentProject.name} on WhatsApp">Start Similar Project</a>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        <section class="details-section">
+          <div class="container">
+            <div class="section-heading">
+              <div>
+                <div class="eyebrow">Project Breakdown</div>
+                <h2>Simple. Strategic.<br>Outcome-Focused.</h2>
+              </div>
+              <p>A quick look at the challenge, what we built, the technology behind it, and the result it created.</p>
+            </div>
+            <div class="details-grid">
+              <article class="detail-card">
+                <div class="detail-label">Problem</div>
+                <h3 class="detail-title">What needed to be solved</h3>
+                <p class="detail-copy">${currentProject.problem}</p>
+              </article>
+              <article class="detail-card">
+                <div class="detail-label">Solution</div>
+                <h3 class="detail-title">How neunrg approached it</h3>
+                <p class="detail-copy">${currentProject.solution}</p>
+              </article>
+              <article class="detail-card">
+                <div class="detail-label">Tech Used</div>
+                <h3 class="detail-title">Built with the right stack</h3>
+                <div class="tech-stack">
+                  ${currentProject.techUsed.map(tech => `<span class="tech-pill">${tech}</span>`).join('')}
+                </div>
+              </article>
+              <article class="detail-card">
+                <div class="detail-label">Result</div>
+                <h3 class="detail-title">What changed after launch</h3>
+                <p class="detail-copy">${currentProject.result}. The final delivery was designed to improve performance in a way that business owners and teams could actually feel.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="related-section">
+          <div class="container">
+            <div class="section-heading">
+              <div>
+                <div class="eyebrow">Explore More</div>
+                <h2>More projects in the<br>neunrg portfolio.</h2>
+              </div>
+              <p>If this project feels close to your needs, the rest of the portfolio will help you see the breadth of what neunrg can build.</p>
+            </div>
+            <div class="related-grid">${relatedProjects}</div>
+          </div>
+        </section>
+
+        <section class="project-cta">
+          <div class="container">
+            <div class="project-cta-box">
+              <div class="project-cta-copy">
+                <h2>Want this kind of<br>result for your business?</h2>
+                <p>Bring us the problem, the deadline, or the growth goal. We will help shape the right solution and build it with clarity.</p>
+              </div>
+              <a class="cta-button" href="${projectWhatsAppLink}" target="_blank" rel="noopener noreferrer" aria-label="Start a similar project to ${currentProject.name} on WhatsApp">Start Similar Project</a>
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
+    if (!project) {
+      renderNotFound();
+    } else {
+      setMeta(project);
+      renderProject(project);
+    }
+
+    bindDefaultWhatsAppCtas();
+
+    document.querySelectorAll('.js-current-year').forEach(el => {
+      el.textContent = new Date().getFullYear();
+    });
+  </script>
+</body>
+</html>

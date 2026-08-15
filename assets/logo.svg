@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120">
+  <rect width="400" height="120" rx="24" fill="#050a12"/>
+  <circle cx="64" cy="60" r="36" fill="none" stroke="#00f0ff" stroke-width="6"/>
+  <path d="M72 24 L40 66 h16 L56 96 L88 54 h-16 z" fill="#39ff88"/>
+  <text x="116" y="78" font-family="Arial, Helvetica, sans-serif" font-size="48" font-weight="bold" letter-spacing="4" fill="#f0f8ff">neu<span fill="#00f0ff">nrg</span></text>
+</svg>
